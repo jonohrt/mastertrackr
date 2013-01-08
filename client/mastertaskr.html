@@ -1,0 +1,30 @@
+<head>
+  <title>mastertaskr</title>
+</head>
+
+<body>
+  {{loginButtons}}
+  {{#with group}}
+  	{{> display_group}}
+  	  
+
+  {{else}}
+    {{> create_group}}
+  {{/with}}
+</body>
+
+<template name="create_group">
+  <h1>Create a group</h1>
+  <p> 
+  	<input type="text" placeholder="Group name" name="name" id="name" />
+  	<input type="submit" value="Create" />
+  </p>
+</template>
+
+<template name="display_group">
+  {{#if group}}
+	{{#with group}}
+	  Name:{{name}}
+	{{/with}}
+  {{/if}}
+</template>
