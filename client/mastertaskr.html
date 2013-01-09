@@ -35,16 +35,16 @@
    <p>
     <h2>Members:</h2>
     <ul id="memberList">
-      {{#for user in users}}
-        {{email}}
-      {{/for}}
+
     </ul>
   </p>
 
   <p>
     <h2>Users:</h2>
     <ul id="userList">
-
+       {{#each users}}
+        <li>{{emails}}</li>
+      {{/each}}
     </ul>
   </p>
 

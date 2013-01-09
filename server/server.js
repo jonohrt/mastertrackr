@@ -4,4 +4,8 @@ Meteor.startup(function () {
   Meteor.publish("groups", function() {
   	return Groups.find({}, {owner: this.userId})
   });
+  Meteor.publish("users", function() {
+  	return Meteor.users.find({}, {fields: {emails: 1}});
+
+  });
 });
