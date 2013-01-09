@@ -1,32 +1,44 @@
-if (Meteor.isClient) {
-  Meteor.startup(function() {
-  	Meteor.autorun(function () {
-  	  if (! Session.get("selected")) {
-        var group = Groups.findOne();
-        if(group) {
-          Session.set("selected", group._id); 
-        }
-        
-      }
-    });
-  });
-	
-  // Template.hello.greeting = function () {
-  //   return "Welcome to mastertaskr.";
-  // };
+Meteor.subscribe("groups", function() {
+  var group = Groups.findOne({owner: this.userId}); 
+});
 
-  Template.create_group.events({
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-      var group_name = document.getElementById('name');
-      if (group_name.value) {
-      	Meteor.call('createGroup', {name: group_name.value});
-      }
+
+
+Meteor.startup(function() {
+
+	 
+
+});
+
+
+
+// Template.hello.greeting = function () {
+//   return "Welcome to mastertaskr.";
+// };
+
+Template.create_group.events({
+  'click input' : function () {
+    // template data, if any, is available in 'this'
+    var group_name = document.getElementById('name');
+    if (group_name.value) {
+    	Meteor.call('createGroup', {name: group_name.value});
     }
-  });
+  }
+});
+Template.create_or_display.group = function () {
+  return Groups.findOne({owner: this.userId});
+};
 
-  Template.display_group.group = function () {
-  	console.log("fuck");
-  	return Groups.findOne(Session.get("selected"));
-  };
+Template.display_group.group = function () {
+	return Groups.findOne({owner: this.userId});
+};
+
+Template.display_group.users = function() {
+  return Meteor.users.find();
 }
+
+Template.display_group.events({
+  'click .remove': function(event) {
+    Groups.remove(this._id);
+  }
+});

@@ -4,14 +4,17 @@
 
 <body>
   {{loginButtons}}
-  {{#with group}}
-  	{{> display_group}}
-  	  
+  {{> create_or_display}}
+</body>
 
+<template name="create_or_display">
+  {{#if group}}
+    {{> display_group}}
   {{else}}
     {{> create_group}}
-  {{/with}}
-</body>
+  {{/if}}
+
+</template>
 
 <template name="create_group">
   <h1>Create a group</h1>
@@ -22,9 +25,29 @@
 </template>
 
 <template name="display_group">
+  Group:
   {{#if group}}
-	{{#with group}}
-	  Name:{{name}}
-	{{/with}}
+	 {{#with group}}
+	   Name:{{name}}
+     <a href="#" class="remove">X</a>
+	 {{/with}}
+
+   <p>
+    <h2>Members:</h2>
+    <ul id="memberList">
+      {{#for user in users}}
+        {{email}}
+      {{/for}}
+    </ul>
+  </p>
+
+  <p>
+    <h2>Users:</h2>
+    <ul id="userList">
+
+    </ul>
+  </p>
+
   {{/if}}
+
 </template>
